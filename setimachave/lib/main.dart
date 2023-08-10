@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('loggedIn') ?? false;
-  String initialRoute = isLoggedIn ? '/main' : '/home';
+  String initialRoute = isLoggedIn ? '/home' : '/home';
   runApp(MyApp(initialRoute: initialRoute));
 }
 

@@ -40,8 +40,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (response.statusCode == 201) {
-        // SharedPreferences prefs = await SharedPreferences.getInstance();
-        // prefs.setBool('loggedIn', true);
         status = response.statusCode;
       }
     }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:setimachave/utils/colors.dart';
@@ -19,6 +21,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<int> _SendForm() async {
     int status = 400;
+    final String username;
+    final String useremail;
+    final int userid;
+
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
@@ -38,8 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('loggedIn', true);
         status = response.statusCode;
+        var resBody = response.body;
+        var jsonBody = jsonDecode(resBody);
+        prefs.setBool('loggedIn', true);
+        prefs.setInt('userId', jsonBody['id']);
+        prefs.setString('userEmail', jsonBody['email']);
+        prefs.setString('userName', jsonBody['name']);
       }
     }
     return status;
@@ -83,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value!.isEmpty) {
                                   return 'Por favor, insira seu email';
                                 }
-                                // Você pode adicionar mais validações de email aqui
                                 return null;
                               },
                             ),
